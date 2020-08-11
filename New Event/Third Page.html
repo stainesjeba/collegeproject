@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+        <script src="../bootstrap/jquery-3.4.1.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <script src = "../Home/load.js"></script>
+        <script src = "navbar.js"></script>
+        <link rel="stylesheet" href = "navbar.css">
+
+        <style>
+            .my-navbar-title{
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+            .my-navbar-sub-title{
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 18px;
+                letter-spacing: 1px;
+                top: 20px;
+            }
+            .my-pagination{
+                position: absolute; 
+                bottom: 30px !important;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .space-pre-nex{
+                width: 15vw;
+                background: none;
+            }
+            .my-row{
+                height: 55%;
+                margin: 5px;
+                margin-top: 70px;
+                
+            }
+            .my-relative-ver-center{
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .my-next-button{
+                padding: 5px;
+                width: 100px;
+            }
+        </style>
+
+    </head>
+
+    <body onload="getroot('../Home/');getnavbar('../Home/')" >
+
+        <nav class = "navbar align-content-center">
+            <div class = "my-navbar-sub-title text-light">Admin Page</div>
+        </nav>
+
+        <div class="container">
+
+            <div class = "row my-row w-100">
+                <div class= "col-md-3"></div>
+                <div class= "col-md-6 h-100 bg-light rounded p-0">
+                    <div class = "jumbotron my-jumbotron p-4 text-center">
+                        Admin Details
+                    </div>
+
+                    <form action = "updateadmindetail.php"  onsubmit = "return checkpassword()" method = "POST" class = "m-4" id = "my-form">
+
+                        <div class = "form-group">
+                            <input class = "form-control" required placeholder="Admin Name" name = "adminname"  >
+                        </div>
+                        
+                        <div class = "form-group">
+                            <input type = "password" class = "form-control" required placeholder="Admin Password" name = "adminpassword" id = 'password'>
+                        </div>
+
+                        <div class = "form-group">
+                            <input type = "password" class = "form-control" required placeholder="Re-enter Password" id = 'reenterpassword'>
+                        </div>
+                       
+                        <div class = "form-group ">
+                            <button class = "btn btn-primary my-relative-ver-center">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class= "col-md-3"></div>
+            </div>
+
+            <ul class="pagination justify-content-center my-pagination disabled">
+                <li><button class="rounded my-next-button" onclick = "window.location.href='Second Page.php'" id = "nextbutton">Previous</button></li>
+                
+            </ul>
+
+        </div>
+
+        <script>
+                function checkpassword(){
+                    if($("#password").val() == $("#reenterpassword").val()){
+                        return true;
+                    }
+                    else{
+                        $("#my-form").prepend("<div class = 'text-center text-danger'>Password doesn't match</div>");
+                        $("reenterpassword").focus();
+                        return false;
+                    }
+                }
+        </script>
+
+    </body>
+
+
+</html>
