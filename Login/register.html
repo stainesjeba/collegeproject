@@ -1,0 +1,249 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+        <script src="../bootstrap/jquery-3.4.1.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+
+        <style>
+            body{
+                background-image: linear-gradient(-60deg,  #0E297D,  rgb(57, 0, 58));
+            }
+            .my-panel{
+                background: white;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                overflow: scroll;
+                height: 90%;
+            }
+            .my-jumbotron{
+                font-size: 20px;
+                padding: 15px !important;
+            }
+            
+            .my-form-row{
+                margin-bottom: 20px;
+            }
+            .my-form-row input{
+                height: 40px;
+                padding: 10px;
+                border: 1px solid rgb(192, 192, 192);
+            }
+            .my-form-button-group{
+                margin-top: 3%;
+            }
+            .my-form-button{
+                margin-right: 20px;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .my-register{
+                text-decoration: underline;
+                color: blue;
+                margin-top: 15px;
+                cursor: pointer;
+            }
+            .my-register:hover{
+                font-size: 18px;
+                color: rgb(107, 107, 255);
+            }
+            .my-warning-message{
+                margin-top: 10px;
+                font-size: 12px;
+            }
+            .my-input-have-message{
+                margin-bottom: 10px !important;
+            }
+            .my-black-box{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.356);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class = "my-black-box"></div>
+        <div class = "container">
+            <div class = "row h-100">
+                <div class = "col-md-3"></div>
+                <div class = "col-md-6">
+                    <div class = "panel my-panel rounded">
+                        <div class = "jumbotron text-center my-jumbotron sticky-top">
+                            Register
+                        </div>
+                        <form class = "form-group my-form" action = "register.php" onsubmit = "return false" method = "POST" id = "form">
+                            <div class = "form-row my-form-row">
+                                    <input class = "rounded w-75 mx-auto" placeholder="Name" name = "name" required/> <br>
+                            </div>
+
+                            <div class = "form-row my-form-row">
+                                <input class = "rounded w-75 mx-auto" placeholder="User Name" name = "username" id = "username" oninput="check_username()" required/> <br>
+                                <div id = "changeusername" class = "d-none mx-auto text-danger my-warning-message">Sorry! This User Name already picked up</div>
+                            </div>
+                            
+
+                            <div class = "form-row my-form-row">
+                                <input type = "number" class = "rounded w-75 mx-auto" id = "mobile" placeholder="Mobile Number" oninput="check_mobile()" name = "mobile" required/> <br>
+                                <div id = "changemobile" class = "d-none mx-auto text-danger my-warning-message">Mobile Number should have 10 digits</div>
+                            </div>
+
+                            <div class = "form-row my-form-row">
+                                <input type = "email" id = "mail" class = "rounded w-75 mx-auto" placeholder="Mail Id" name = "mail" oninput="check_already_exist()" required/> <br>
+                            </div>
+
+                            <div class = "form-row my-form-row  my-input-have-message">
+                                <input class = "rounded w-75 mx-auto" placeholder= "Password" type = "Password" id  = "password" required oninput = "check_password_length()" name = "password"/>
+                                <div class = "mx-auto  my-warning-message">Password should atleast have 8 characters/numbers</div>
+                            </div>
+
+                            <div class = "form-row my-form-row">
+                                <input class = "rounded w-75 mx-auto" placeholder= "Re-enter Password" type = "Password" id  = "confirmpassword"  oninput= "check_password()"required/>
+                            </div>
+
+                            <div class = "form-row">
+                                    <div class = "btn-group my-form-button-group mx-auto">
+                                        <button class = "btn btn-primary rounded my-form-button" id = "signupbutton" onclick = "checkformdetails()">Sign Up</button>
+                                    </div>
+                                    
+                            </div>
+                            
+                            <div class = "text-center my-register" onclick= "window.location.href = 'index.html'">Have an Account ?</div>
+                        </form>
+                    </div>
+                </div>
+                <div class = "col-md-3"></div>
+            </div>
+
+            <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+        
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Already you have an account!!!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Redirecting to login page...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="myModalsuccess" role="dialog">
+                <div class="modal-dialog">
+            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Successfully Registered!!!</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Redirecting to login page...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <script>
+            var checkuser = false;
+            var checkmobile = false;
+            var checkpass = false;
+            var checkbothpass = false;
+            var checkalreadyregistered = false;
+
+            function checkformdetails(){
+                if(!checkuser){$("#username").focus();}
+                else if(!checkmobile){$("#mobile").focus();}
+                else if(!checkpass){$("#password").focus();}
+                else if(!checkbothpass){$("#confirmpassword").focus()}
+                else if(!checkalreadyregistered){$('#myModal').modal('show');setTimeout(function(){window.location.href = "index.html"}, 2000);}
+                else {alert("Successfully Registered!!!"); $("#form").attr("onsubmit","register.php");}
+            }
+
+            function  check_username(){
+                
+                $.post("check_username_availability.php",
+                {
+                    username: $("#username").val()
+                },
+                function(data, status){
+                    if(data != 1){
+                        $("#changeusername").removeClass("d-none");
+                        $("#username").addClass("border-danger");
+                        checkuser = false;
+                    }
+                    else{
+                        $("#changeusername").addClass("d-none");
+                        $("#username").removeClass("border-danger");
+                        $("#username").addClass("border-success");
+                        checkuser =  true;
+                    }
+                });
+
+            }
+
+            function check_mobile(){
+
+                if($("#mobile").val().length != 10)
+                {
+                    $("#mobile").addClass("border-danger");
+                    checkmobile = false;
+                }
+                else{
+                    $("#mobile").removeClass("border-danger");
+                    checkmobile = true;
+                }
+            }
+
+            function check_password_length(){
+
+                check_password();
+                
+                if($("#password").val().length < 8){
+                    $("#password").addClass("border-danger");
+                    checkpass = false;
+                }
+                else{
+                    $("#password").removeClass("border-danger");
+                    checkpass = true;
+                }
+            }
+            function check_password(){
+                if($("#password").val() != $("#confirmpassword").val()){
+                    $("#confirmpassword").addClass("border-danger");
+                    checkbothpass = false;
+                }
+                else{
+                    $("#confirmpassword").removeClass("border-danger");
+                    checkbothpass = true;
+                }
+            }
+
+            function check_already_exist(){
+                $.post("check_already_user_exist.php",{
+                    mail : $("#mail").val()
+                },
+                function(data, status){
+                    if(data != 1){
+                        checkalreadyregistered = false;
+                    }
+                    else{
+                        checkalreadyregistered = true;
+                    }
+                });
+            }
+        
+        </script>
+    </body>
+
+</html>

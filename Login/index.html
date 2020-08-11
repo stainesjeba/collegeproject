@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+        <script src="../bootstrap/jquery-3.4.1.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <script src = "../Home/load.js"></script>
+        <script src = "../New Event/navbar.js"></script>
+        <link rel="stylesheet" href = "../New Event/navbar.css">
+        <link rel = "stylesheet" href = "../fontawesome-free-5.13.0-web/css/all.min.css">
+
+
+        <style>
+            
+                .my-panel{
+                background: white;
+                position: relative;
+                top: 60%;
+                transform: translateY(-60%);
+                
+                padding-bottom: 5px;
+            }
+            body{
+                background-image: linear-gradient(-60deg,  #0E297D,  rgb(57, 0, 58));
+            }
+            
+            .my-jumbotron{
+                font-size: 20px;
+                padding: 20px !important;
+            }
+            .my-form{
+                position: relative;
+                
+            }
+            .my-form-row{
+                margin-bottom: 20px;
+            }
+            .my-form-row input{
+                height: 40px;
+                padding: 10px;
+                border: 1px solid rgb(192, 192, 192);
+            }
+            .my-form-button-group{
+                margin-top: 1%;
+            }
+            .my-form-button{
+                margin-right: 20px;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .my-register{
+                text-decoration: underline;
+                color: blue;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+            .my-register:hover{
+                font-size: 17px;
+                color: rgb(90, 90, 252);
+            }
+            .my-wrong-message{
+                margin-bottom: 10px;
+            }
+            .my-username-div{
+                display:none;
+            }
+            .my-navbar-brand{
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 30px;
+                font-size: 30px;
+            }
+        </style>
+    </head>
+
+    <body onload= "getnavbar('../Home/')">
+        <div class = "container">
+            <div class = "row h-75">
+                <div class = "col-md-3"></div>
+                <div class = "col-md-6">
+                    <div class = "panel my-panel rounded">
+                        <div class = "jumbotron text-center my-jumbotron ">
+                            LOG IN
+                        </div>
+                        <div class = "text-danger my-wrong-message text-center d-none" id = "wrongmessage">User Name or Password is wrong</div>
+                        <form class = "form-group my-form" action="authenticateuser.php" method = "POST">
+                            <div class = "form-row my-form-row">
+                                    <input class = "rounded w-75 mx-auto" placeholder="User Name" name = "username"/> <br>
+                            </div>
+
+                            <div class = "form-row my-form-row">
+                                <input class = "rounded w-75 mx-auto" placeholder= "Password" type = "Password" name = "password"/>
+                            </div>
+
+                            <div class = "form-row">
+                                    <div class = "btn-group my-form-button-group mx-auto">
+                                        <button class = "btn btn-primary rounded my-form-button" onclick="checkuser()">Log In</button>
+                                    </div>
+                                    
+                            </div>
+                            
+                            <div class = "text-center my-register"><a href = "register.html">Yet to Register ?</a></div>
+                        </form>
+                    </div>
+                </div>
+                <div class = "col-md-3"></div>
+            </div>
+        </div>
+
+
+        <script>
+
+        $(document).ready(function(){
+            $url = $(location).attr('href');
+            $wrong = $url.substr(-1);
+            if($wrong == 0){
+                $("#wrongmessage").removeClass("d-none");
+            }
+        });
+            
+        </script>
+    </body>
+
+</html>
